@@ -1,0 +1,20 @@
+version: "3.5"
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: abc
+    volumes:
+        - ./mysql/mydb_log.sql:/docker-entrypoint-initdb.d/mydb_log.sql
+        - ./mysql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+        - db_data:/var/lib/mysql
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080 # http://localhost:8080
+
+volumes:
+    db_data:
